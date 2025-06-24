@@ -19,14 +19,6 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public Task update(Task task) {
-        return taskRepository.save(task);
-    }
-
-    public void delete(UUID id) {
-        taskRepository.deleteById(id);
-    }
-
     public Task findById(UUID id) {
         return taskRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Task not found"));
@@ -34,6 +26,18 @@ public class TaskService {
 
     public List<Task> listAll() {
         return taskRepository.findAll();
+    }
+
+    public Task update(UUID id, Task task) {
+        Task taskToUpdate = findById(id);
+        taskToUpdate.setTitle(task.getTitle());
+        taskToUpdate.setDescription(task.getDescription());
+        taskToUpdate.setStatus(task.getStatus());
+        return taskRepository.save(task);
+    }
+
+    public void delete(UUID id) {
+        taskRepository.deleteById(id);
     }
 
 }
